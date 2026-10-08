@@ -75,3 +75,11 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 CMakeUserPresets.json
+
+# Video2X Studio (web UI)
+backend/venv/
+backend/storage/
+backend/.env
+__pycache__/
+frontend/node_modules/
+frontend/dist/

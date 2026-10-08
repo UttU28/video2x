@@ -9,6 +9,27 @@
    <img src="https://img.shields.io/badge/dynamic/json?color=%23e85b46&label=Patreon&query=data.attributes.patron_count&suffix=%20patrons&url=https%3A%2F%2Fwww.patreon.com%2Fapi%2Fcampaigns%2F4507807&style=flat-square"/>
 </p>
 
+## 🌐 Video2X Studio (web UI) — https://video.thatinsaneguy.com
+
+This fork adds a web UI on top of the Video2X engine:
+
+```
+backend/
+  engine/          upstream Video2X C++ engine (src, include, tools, models, third_party, CMakeLists.txt)
+  api/             FastAPI app: upload, single-GPU job queue, progress, preview, download
+  buildEngine.sh   builds engine → backend/engine/build/install (C++17, bundled ncnn/spdlog)
+  ecosystem.config.cjs   PM2 process "video2x" (uvicorn on 127.0.0.1:9281)
+  storage/         uploads, results, jobs.db (gitignored)
+frontend/          React + Vite UI (built to dist/, served by nginx)
+nginxVideo.conf    nginx vhost (static UI + /api proxy); certbot adds HTTPS
+deploy.sh          full deploy; also option 7 in ~/Desktop/deploy.sh
+```
+
+- Deploy: `sudo bash deploy.sh` (or `sudo bash ~/Desktop/deploy.sh 7`). Without sudo it skips nginx/TLS.
+- Dev: `pm2 start backend/ecosystem.config.cjs`, then `cd frontend && npm run dev` (proxies `/api` to 9281).
+- Build prerequisites (Arch): `sudo pacman -S --needed vulkan-headers boost cmake ninja ffmpeg`.
+- API docs: `http://127.0.0.1:9281/api/docs`. Settings: `backend/.env` (see `.env.example`).
+
 ## 🌟 Version 6.0.0
 
 Video2X 6.0.0 highlights:
